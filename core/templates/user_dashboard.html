@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{request.user.username}} Dashboard{% endblock %}
+{% block main %}
+
+<section class="user-dash">
+	
+		<h3>Tours</h3>
+		<ul class="tour-reqs">
+		{% if tours %}
+
+			{% for tour in tours %}
+				{% include 'partials/tour.html' %}
+			{% endfor %}
+
+		{% else %}
+		    <p>No tour requests have been found.</p>
+		{% endif %}
+			
+		</ul>
+		
+		<hr>
+
+		<h3>My homes</h3>
+		<ul class="rent-items">
+		{% if rents %}
+
+			{% for rent in rents %}
+				{% include 'partials/rent_item.html' %}
+			{% endfor %}
+
+		{% else %}
+		    <p>You don't own any places yet.</p>
+		{% endif %}
+		</ul>
+
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

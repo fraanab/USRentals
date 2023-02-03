@@ -1,0 +1,59 @@
+<li class="rent-item">
+	<div class="rent-item-img">
+		<img src="{{rent.rental.img1.url}}" alt="zxc">
+	</div>
+
+	<div class="rent-item-info">
+		<p {% if rent.paid == False %}class="paidfalse"{% endif %}><span>Paid: </span> {{rent.paid}}</p>
+		<p><span>Living here since: </span>{{rent.created_at}}</p>
+		<p><span>Paid ammount: </span>${{rent.rental.rent}}</p>
+		<p><span>Next payment: </span>{{rent.next_payment}}</p>
+	</div>
+
+	{% if rent.paid == False %}
+	<div id="paypal-button-container" style="margin-top:10px" class="paypalbtn"></div>
+	{% endif %}
+</li>
+
+{% block scripts %}
+
+<script>
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=Aahzba2lrC6LU0MiboLXPdIyGkE3jlhlKBVBqdxm1m6pMqrBHZGVyrwGqDBt0exgDry8Ij9vu1g6ttxC&components=buttons"></script>
+
+<script>
+	csrftoken = document.getElementsByName('csrfmiddlewaretoken')[0].value
+	paypal.Buttons({
+    style: {
+        layout: 'vertical',
+        color:  'blue',
+        shape:  'rect',
+        label:  'paypal'
+    },
+    createOrder: function(data, actions) {
+      // Set up the transaction
+        return actions.order.create({
+            purchase_units: [{
+                amount: {
+                    value: {{ rent.rental.rent }}
+                }
+            }]
+        });
+    },
+    onApprove: function(data, actions) {
+        // This function captures the funds from the transaction.
+        const confirm = fetch('{% url "deposit" rent.rental.id %}', {
+        	method: 'POST',
+        	headers: {"X-CSRFToken":csrftoken},
+        	mode: 'cors',
+        	credentials: 'same-origin',
+        })
+        return actions.order.capture().then(function(details) {
+        // This function shows a transaction success message to your buyer.
+            alert('Transaction completed by ' + details.payer.name.given_name);
+        });
+    },
+}).render('#paypal-button-container');
+</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block main %}
+<section class="hero">
+    <img src="{% static 'hero.jpg' %}" alt="heroimg">
+
+    <div class="hero-text">
+        <h1>Discover the Best Rentals in your state</h1>
+        <a href="#cta">Start Your Search Today!</a>
+    </div>
+</section>
+
+<div class="dash">
+    
+    <section class="left-panel-fp">
+        <h2 id="cta">Rent a home in the US</h2>
+        {% if rentals %}
+            <section class="item-grid">
+                {% for rental in allrentals %}
+                    {% include 'partials/fp_rent_item.html' %}
+                {% endfor %}
+            </section>
+        {% else %}
+            <div>
+                <p>This place looks empty...😕</p>
+                <p>Come back later.</p>
+            </div>
+        {% endif %}
+    </section>
+
+    <section class="right-panel-fp">
+        <select onchange="location = this.value;">
+            <option value="CALIFORNIA">· Sort by state ·</option>
+            {% for state in states %}
+                <option value="?category={{state}}">{{state}}</option>
+            {% endfor %}
+        </select>
+    </section>
+
+</div>
+
+{% endblock %}

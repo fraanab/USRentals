@@ -1,0 +1,28 @@
+<div class="item">
+    <!-- column -->
+    <div class="itemimg">
+        <!-- slide -->
+        <img src="{{rental.img1.url}}" alt="{{rental.address}}">
+    </div>
+
+    <a href="{% url 'rental' rental.id %}">
+    <h3>{{rental.state}} {{rental.address}}</h3>
+    </a>
+    <ul class="iteminfo">
+        <!-- column -->
+        <li class="price">${{rental.rent}} /mo</li>
+        <li class="itemdesc">{{rental.description}}</li>
+        <li class="itemaddress">{{rental.address}}</li>
+        <li class="itemtype">
+            {% if rental.building %}
+            <i class="fa-solid fa-building"></i> <span>Apartment</span>
+            {% else %}
+            <i class="fa-solid fa-house"></i> <span>House</span>
+            {% endif %}
+        </li>
+        <li class="itemactions">
+            <a href="{% url 'new_tour' rental.id %}">Request a tour</a>
+            <a>{{rental.phone}}</a>
+        </li>
+    </ul>
+</div>

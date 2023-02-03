@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block main %}
+<section class="touring">
+	<div class="touring-img">
+		<img src="{{rental.img1.url}}" alt="1">
+	</div>
+
+	<form action="." method="POST">
+		{% csrf_token %}
+		<label for="td">Preferred tour date:</label>
+		<input required type="date" id="td" name="tour_date">
+		<label for="md">Preferred move-in date:</label>
+		<input required type="date" id="md" name="move_in_date">
+		<label for="msg">Message:</label>
+		<textarea name="message" id="msg" cols="30" rows="10"></textarea>
+		<button class="btn">Request</button>
+	</form>
+</section>
+{% endblock %}

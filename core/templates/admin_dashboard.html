@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block main %}
+<section class="dash">
+
+	<ul class="tenants">
+		<h3>Tenants</h3>
+		{% if tenants %}
+		{% for tenant in tenants %}
+		<li>
+			<p class="tenant-name">{{tenant.user.username}}</p>
+			<p>Paid: {{tenant.paid}}</p>
+			<p>Due: {{tenant.next_payment}}</p>
+			<p>{{tenant.rental.address}}</p>
+			<form action="{% url 'del_client' tenant.id %}" method="POST">
+				{% csrf_token %}
+				<button class="btn" title="This action will be permanent">Delete this Tenant</button>
+			</form>
+		</li>	
+		{% endfor %}
+		{% else %}
+		    <li>No new tenants</li>
+		{% endif %}
+	</ul>
+
+	<div class="dash-l">
+		<div class="counts">
+
+			<div class="count">
+				Current Tenants
+				( {{num_tenants}} )
+			</div>
+			<div class="count">
+				Profit
+				$ {{admin_data}}
+			</div>
+			<div class="count">
+				New Tours
+				( {{num_tours}} )
+			</div>
+			<div class="count">
+				Rents to pay
+				( {{dues}} )
+			</div>
+			
+		</div>
+
+		<hr>
+
+		<h3>Tours</h3>
+		<ul class="tour-reqs">
+
+			{% if tours %}
+				{% for tour in tours %}
+					{% include 'partials/tour.html' %}
+				{% endfor %}
+			{% else %}
+			    <p>No new tour requests</p>
+			{% endif %}
+			
+		</ul>
+
+		<hr>
+
+		<div class="due-payments">
+			<h3 style="text-align:center;">Payments due</h3>
+			{% if due %}
+			<ul>
+				{% for topay in due %}
+				<li>
+					<p>User: {{topay.user.username}}</p>
+					<p>Address: {{topay.rental.address}}</p>
+					<p>Had to pay: {{topay.next_payment}}</p>
+					<p>Phone: {{topay.phone}}</p>
+					<p>Email: {{topay.email}}</p>
+				</li>
+				{% endfor %}
+			</ul>
+			{% else %}
+			    <p style="text-align:center;">No due payments. Everything is ok 😉</p>
+			{% endif %}
+		</div>
+
+		<hr>
+	</div>
+
+</section>
+{% endblock %}

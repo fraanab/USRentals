@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block main %}
+<section class="authform">
+	<h1>Log in</h1>
+	<form action="." method="POST">
+		{% csrf_token %}
+		<label for="username">Username</label>
+		<input type="text" id="username" name="username">
+		<label for="password">Password</label>
+		<input type="password" id="password" name="password">
+		<button class="btn">Log In</button>
+	</form>
+	<a href="{% url 'signup' %}">Sign Up <span style="text-decoration:underline">here</span></a>
+</section>
+{% endblock %}

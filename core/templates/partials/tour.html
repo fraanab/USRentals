@@ -1,0 +1,26 @@
+<li class="tour">
+	<div class="itemimg">
+		<img src="{{tour.rental.img1.url}}" alt="1">
+	</div>
+	<div class="tourinfo">
+
+		<a href="{% url 'rental' tour.rental.id %}">
+			{{tour.rental.state}}, 
+			{{tour.rental.address}},  
+			Available: {{tour.rental.available}} 
+		</a>
+		<p><span>Date: </span>{{tour.tour_date}}</p>
+		<p><span>Move in date: </span>{{tour.move_in_date}}</p>
+		<p><span>Message: </span>{{tour.message}}</p>
+		<p><span>Email address:</span> {{tour.user.email}}</p>
+
+		{% if request.user.is_superuser or request.user == tour.user %}
+		    
+		<form action="{% url 'delete_tour' tour.id %}">
+			{% csrf_token %}
+			<button class="delete">Remove</button>
+		</form>
+		
+		{% endif %}
+	</div>
+</li>

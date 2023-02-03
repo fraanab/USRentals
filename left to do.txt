@@ -1,0 +1,5 @@
+mail messages after:
+	tour request:	para admin
+	tour vencido:	para user y admin
+	tenant paid=False:	para admin
+	tenant paid=True: para user y admin

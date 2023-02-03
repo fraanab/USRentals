@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>USRentals</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	{% csrf_token %}
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+	<nav>
+		<a href="/">Home</a>
+		<ul>
+			{% if request.user.is_authenticated %}
+			<li><a href="{% url 'dashboard' %}" class="fa-solid fa-user"></a></li>
+			<li><a href="{% url 'logout' %}" class="fa-solid fa-arrow-right-from-bracket"></a></li>
+			{% else %}
+			<li><a href="{% url 'login' %}" class="fa-solid fa-user"></a></li>
+			{% endif %}
+		</ul>
+	</nav>
+
+	<main>
+	{% block main %}
+	{% endblock %}
+	</main>
+
+	{% if request.user.is_superuser %}
+	<button title="New place" id="myBtn"><i class="fa-solid fa-plus"></i></button>
+
+	<div id="myModal" class="modal">
+		<div class="modal-content">
+			<span class="close">x</span>
+			<form action="{% url 'new_rental' %}" method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{rental_form}}
+				<button title="Create" class="btn">Create</button>
+			</form>
+		</div>
+	</div>
+	{% endif %}
+
+	<footer>
+		<a href="/">Home</a>
+		<p>{{request.user}}</p>
+	</footer>
+
+	{% block scripts %}
+	{% endblock %}
+	<script>
+		let modal = document.getElementById('myModal')
+		let modal_btn = document.getElementById('myBtn')
+		let span = document.getElementsByClassName('close')[0]
+		modal_btn.onclick = function(){
+			modal.style.display = 'block'
+		}
+		span.onclick = function(){
+			modal.style.display = 'none'
+		}
+		window.onclick = function(e){
+			if (e.target == modal){
+				modal.style.display = 'none'
+			}
+		}
+	</script>
+</body>
+</html>
