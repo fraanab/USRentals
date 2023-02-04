@@ -38,7 +38,7 @@
 
 		<div class="rental-actions">
 			
-			<a href="#" class="btn tour-req">Request a Tour</a>
+			<a href="{% url 'new_tour' rental.id %}" class="btn tour-req">Request a Tour</a>
 			{% if request.user.is_superuser %}
 			<form class="deleteform" action="{% url 'del_rental' rental.id %}" method="POST">
 				{% csrf_token %}

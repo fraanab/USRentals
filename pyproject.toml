@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "repl_nix_USRentals"
+version = "0.1.0"
+description = ""
+authors = ["Replit user <<>>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.1.6"
+python-dateutil = "^2.8.2"
+tzdata = "^2022.7"
+cloudinary = "^1.31.0"
+django-cloudinary-storage = "^0.3.0"
+django-cors-headers = "^3.13.0"
+whitenoise = "^6.3.0"
+Pillow = "^9.4.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
